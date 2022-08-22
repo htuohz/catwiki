@@ -1,6 +1,4 @@
-.App {
-  text-align: center;
-}
+
 
 .App-logo {
   height: 40vmin;
@@ -33,4 +31,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.MuiInputBase-root{
+  background-color: white;
+  height: 40;
 }
