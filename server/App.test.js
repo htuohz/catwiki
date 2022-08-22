@@ -32,5 +32,17 @@ describe("/breeds", () => {
         );
       });
   });
+
+  it("GET breed detail /breeds/:id -> breed detail", () => {
+    return request(app)
+      .get("/breeds/abys")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then(res=>{
+        console.log(res.body);
+        expect(res.body.id).toEqual("abys");
+
+      })
+  })
 });
 

@@ -35,7 +35,7 @@ app.get("/", (req,res) => {
         console.error(err)
       });
     })
-    .catch(err=>res.json(err))
+    .catch(err=>console.error(err))
   })
 })
 app.use("/breeds", breedsRouter);
