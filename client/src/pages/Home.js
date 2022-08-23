@@ -9,10 +9,12 @@ import React, { useEffect, useState } from "react";
 import { breeds } from "../consts/consts";
 import debounce from 'lodash.debounce';
 import { fetchSuggestionsByQuery } from "../apis/apis";
+import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Home({theme}) {
   const [breedsSuggestions, setBreedsSuggestions] = useState([]);
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
   useEffect(()=>{ 
     if(!query){
       return;
@@ -30,6 +32,7 @@ export default function Home() {
 
   const handleSelectBreed = (event,obj) => {
     console.log(obj.value)
+    navigate(`/breedDetails/${obj.value}`)
   }
   return (
     <Container>

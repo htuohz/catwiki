@@ -2,6 +2,8 @@ import React from "react";
 import Home from "./pages/Home";
 import "./App.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import BreedDetail from "./pages/BreedDetails";
 
 const THEME = createTheme({
   typography: {
@@ -26,19 +28,15 @@ const THEME = createTheme({
 function App() {
   const [data, setData] = React.useState(null);
 
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
-
   return (
     <ThemeProvider theme={THEME}>
       <div className="App">
-        {/* <header className="App-header">
-          <p>{!data ? "Loading..." : data}</p>
-        </header> */}
-        <Home />
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/breedDetails/:id" element={<BreedDetail />} />
+          </Routes>
+        </Router>
       </div>
     </ThemeProvider>
   );
