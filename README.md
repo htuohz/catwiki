@@ -14,10 +14,12 @@ A home page created with a search bar in client
 
 ### User story 2
 Image search api built and testing created in the backend
+
 A breed details page created with a responsive Grid layout displaying fetched images.
 
 ### User sotry 3
-Get detail api build and testing created in the backend
+Get details api built and testing created in the backend
+
 A breed details page created with a separate component displaying numerical parameters of breeds.
 
 ## Starting the backend
