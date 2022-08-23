@@ -19,24 +19,26 @@ app.use(express.static(path.resolve(__dirname, "../client/build")));
 //   res.json({ message: "Hello from CatWiki!" });
 // });
 
-app.get("/", (req,res) => {
+app.get("/", (req,res,next) => {
   fs.readFile("breeds.json","utf-8",(err,data)=>{
-    if(!err){
+    if(err){
+      console.log(err);
+    }else{
       let breeds = JSON.parse(data);
-      if(breeds.length>0){
-        res.status(200).json(breeds.map(item=>({id:item.id, name:item.name})));
+      if(breeds.length < 1){
+        fetch("https://api.thecatapi.com/v1/breeds")
+        .then(response=>response.json())
+        .then(data=>{
+          fs.writeFile("breeds.json",JSON.stringify(data),(err)=>{
+            if(err){
+              console.error(err)
+            }
+          });
+        })
       }
     }
-    fetch("https://api.thecatapi.com/v1/breeds")
-    .then(response=>response.json())
-    .then(data=>{
-      res.status(200).json(data.map(item=>({id:item.id, name:item.name})));
-      fs.writeFile("breeds.json",JSON.stringify(data),(err)=>{
-        console.error(err)
-      });
-    })
-    .catch(err=>console.error(err))
   })
+  res.status(200).json("");
 })
 app.use("/breeds", breedsRouter);
 
