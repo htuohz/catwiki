@@ -5,3 +5,7 @@ export const fetchSuggestionsByQuery = async (query) =>{
 export const fetchBreedDetailById = async (id) => {
     return await fetch(`/breeds/${id}`);
 }
+
+export const fetchImagesById = async (id) => {
+    return await fetch(`/breeds/images?q=${id}`);
+}
