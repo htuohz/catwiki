@@ -44,7 +44,7 @@ export default function Home({theme}) {
         padding={5}
         style={{backgroundImage:`url(https://images.pexels.com/photos/37337/cat-silhouette-cats-silhouette-cat-s-eyes.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)`,backgroundPosition:"center",backgroundSize:"cover",color:"white"}}
       >
-        <Grid item xs={12} sm={5} marginLeft={3} paddingTop={2} marginRight="50%" >
+        <Grid item xs={12} sm={5} marginLeft={3} paddingTop={2} maxWidth={400}>
           <Typography variant="h4">Cat Wiki</Typography>
           <Typography>Get to know more about your cat breed</Typography>
           <Autocomplete
