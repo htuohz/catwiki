@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { breeds } from "../consts/consts";
 import debounce from "lodash.debounce";
-import { fetchBreedDetailById, fetchSuggestionsByQuery } from "../apis/apis";
+import { fetchBreedDetailById, fetchImagesById, fetchSuggestionsByQuery } from "../apis/apis";
 import { useParams } from "react-router-dom";
 import { Box } from "@mui/system";
 import BreedChart from "../components/BreedChart";
@@ -64,7 +64,7 @@ export default function BreedDetails() {
       .then((res) => res.json())
       .then((data) => setBreed(data))
       .catch((err) => console.error(err));
-    fetch(`/breeds/images?q=${id}`)
+    fetchImagesById(id)
       .then((res) => res.json())
       .then((data) => setImages(data))
       .catch((err) => console.error(err));
@@ -105,7 +105,7 @@ export default function BreedDetails() {
               <br />
               <Typography>
                 <strong>Lifespan: </strong>
-                {breed.life_span}
+                {breed.life_span} years
               </Typography>
               <br />
               <BreedChart
