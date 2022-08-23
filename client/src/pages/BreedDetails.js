@@ -2,13 +2,15 @@ import {
   Autocomplete,
   Container,
   Grid,
+  ImageList,
+  ImageListItem,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { breeds } from "../consts/consts";
 import debounce from "lodash.debounce";
-import { fetchSuggestionsByQuery } from "../apis/apis";
+import { fetchBreedDetailById, fetchSuggestionsByQuery } from "../apis/apis";
 import { useParams } from "react-router-dom";
 import { Box } from "@mui/system";
 import BreedChart from "../components/BreedChart";
@@ -56,9 +58,17 @@ const TEST_BREED = {
 export default function BreedDetails() {
   const [breed, setBreed] = useState({});
   const { id } = useParams();
+  const [images, setImages] = useState([]);
   useEffect(() => {
-    setBreed(TEST_BREED);
-  }, []);
+    fetchBreedDetailById(id)
+      .then((res) => res.json())
+      .then((data) => setBreed(data))
+      .catch((err) => console.error(err));
+    fetch(`/breeds/images?q=${id}`)
+      .then((res) => res.json())
+      .then((data) => setImages(data))
+      .catch((err) => console.error(err));
+  }, [id]);
 
   return (
     <Container>
@@ -69,11 +79,11 @@ export default function BreedDetails() {
               <Box
                 component="img"
                 sx={{
-                  maxHeight: 300,
-                  maxWidth: 400,
+                  maxHeight: 200,
+                  maxWidth: 300,
                   borderRadius: 5,
                 }}
-                alt="The house from the offer."
+                alt={breed.name}
                 src={breed.image.url}
               />
             </Grid>
@@ -104,25 +114,37 @@ export default function BreedDetails() {
                   "Affection Level": breed.affection_level,
                   "Child Friendly": breed.child_friendly,
                   Grooming: breed.grooming,
-                  Intelligence:breed.intelligence,
+                  Intelligence: breed.intelligence,
                   "Health Issues": breed.health_issues,
                   "Social Needs": breed.social_needs,
-                  "Stranger Friendly": breed.stranger_friendly
+                  "Stranger Friendly": breed.stranger_friendly,
                 }}
               />
             </Grid>
           </Grid>
+          <Typography variant="h5">Other photos</Typography>
           <Grid
             container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
+            spacing={{ xs: 3}}
+            columns={{ xs: 2, sm: 4, md: 6 }}
           >
-            {/* {.map((_, index) => (
-          <Grid item xs={2} sm={4} md={4} key={index}>
-            <Item>xs=2</Item>
+            {images.map((item, index) => (
+              <Grid item key={index}>
+                <Box
+                  component="img"
+                  sx={{
+                    height: 200,
+                    width: 200,
+                    borderRadius: 2,
+                    objectFit:"cover"
+                  }}
+                  alt={breed.name}
+                  src={item.url}
+                />
+              </Grid>
+            ))}
           </Grid>
-        ))} */}
-          </Grid>
+
         </>
       )}
     </Container>
